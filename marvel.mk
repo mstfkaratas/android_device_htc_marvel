@@ -105,6 +105,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     device/htc/marvel/vold.fstab:system/etc/vold.fstab \
+    device/htc/marvel/qtouch-touchscreen.idc:system/usr/idc/qtouch-touchscreen.idc \
     device/common/gps/gps.conf_EU_SUPL:system/etc/gps.conf
 
 # Kernel modules

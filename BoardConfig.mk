@@ -89,6 +89,14 @@ BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := marvel
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
 
+# Allow compatibility with 'old' Touchscreens (Linux < 3.1)
+#
+# Remember to add the new idc file required for the touchscreen/keypad
+# Example: /system/usr/idc/qtouch-touchscreen.idc
+#
+# http://review.cyanogenmod.com/#change,10354
+BOARD_USE_LEGACY_TOUCHSCREEN := true
+
 # # cat /proc/mtd (marvel)
 #dev:    size   erasesize  name
 #mtd0: 00100000 00040000 "misc"
