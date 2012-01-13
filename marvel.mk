@@ -96,9 +96,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     librs_jni \
     lights.marvel \
-    gralloc.msm7k \
     libOmxCore \
-    copybit.msm7k \
     sensors.marvel \
     gps.marvel \
     com.android.future.usb.accessory
