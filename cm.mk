@@ -1,6 +1,6 @@
 $(call inherit-product, device/htc/marvel/marvel.mk)
 
-PRODUCT_RELEASE_NAME := A510
+PRODUCT_RELEASE_NAME := CRYPTOMILK
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
