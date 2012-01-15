@@ -34,7 +34,7 @@ Copyright (C) 2011 The CyanogenMod Project
   <manifest>
       <project name="CyanogenMod/android_device_htc_common" path="device/htc/common" revision="refs/heads/gingerbread" />
       <project name="gladiac/android_device_htc_marvel" path="device/htc/marvel" />
-      <project name="gladiac/proprietary_vendor_htcl" path="vendor/htc" />
+      <project name="gladiac/proprietary_vendor_htc" path="vendor/htc" />
   </manifest>
 
   $ repo sync
