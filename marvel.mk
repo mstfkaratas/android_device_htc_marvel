@@ -118,12 +118,14 @@ endif
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel
 
-# Prebuilt Modules
+# Prebuilt modules or firmware
 PRODUCT_COPY_FILES += \
     device/htc/marvel/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko \
     device/htc/marvel/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
     device/htc/marvel/firmware/fw_bcm4329.bin:system/etc/firmware/fw_bcm4329.bin \
-    device/htc/marvel/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin
+    device/htc/marvel/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin \
+    device/htc/marvel/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw \
+    device/htc/marvel/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw
 
 # media profiles and capabilities spec
 $(call inherit-product, device/htc/marvel/media_a1026.mk)
