@@ -100,6 +100,8 @@ PRODUCT_PACKAGES += \
     libOmxCore \
     sensors.marvel \
     gps.marvel \
+    gralloc.msm7x27 \
+    copybit.msm7x27 \
     com.android.future.usb.accessory
 
 PRODUCT_COPY_FILES += \
