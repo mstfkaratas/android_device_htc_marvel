@@ -80,12 +80,14 @@ BOARD_VENDOR_QCOM_AMSS_VERSION := 4735
 BOARD_VENDOR_USE_AKMD := akm8975
 
 ### Graphics
-BOARD_USES_QCOM_HARDWARE := true
+# See https://github.com/CyanogenMod/android_frameworks_base/commit/fc496c0607d0d2863ff9587019e890ab806ea49d
+#
+# The adreno200 GLES library has GL_OES_GLES_image_external
+# The adreno200 GLES library should support YV12
+COMMON_GLOBAL_CFLAGS += -DMISSING_GRALLOC_BUFFERS
 
+BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
-TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
-TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
-BOARD_NO_RGBX_8888 := true
 
 ### Touchscreen
 # Allow compatibility with 'old' Touchscreens (Linux < 3.1)
