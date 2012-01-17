@@ -80,6 +80,8 @@ BOARD_VENDOR_QCOM_AMSS_VERSION := 4735
 BOARD_VENDOR_USE_AKMD := akm8975
 
 ### Graphics
+# http://www.slideshare.net/jserv/design-and-concepts-of-android-graphics
+
 # See https://github.com/CyanogenMod/android_frameworks_base/commit/fc496c0607d0d2863ff9587019e890ab806ea49d
 #
 # The adreno200 GLES library has GL_OES_GLES_image_external
