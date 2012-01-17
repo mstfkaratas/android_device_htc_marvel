@@ -24,15 +24,12 @@
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
 USE_CAMERA_STUB := false
-JS_ENGINE:=v8
 BOARD_USE_FROYO_LIBCAMERA := true
 
 # inherit from the proprietary version
 -include vendor/htc/marvel/BoardConfigVendor.mk
 
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
-
+### Board config
 TARGET_BOARD_PLATFORM := msm7x27
 TARGET_ARCH_VARIANT := armv6-vfp
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
@@ -42,9 +39,14 @@ TARGET_CPU_ABI2 := armeabi
 
 TARGET_BOOTLOADER_BOARD_NAME := marvel
 
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
+
 TARGET_PROVIDES_INIT_TARGET_RC := true
 
-# Wifi related defines
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+
+### Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WPA_SUPPLICANT_VERSION      := VER_0_6_X
 BOARD_WLAN_DEVICE           := bcm4329
@@ -54,15 +56,22 @@ WIFI_DRIVER_FW_AP_PATH      := "/system/etc/firmware/fw_bcm4329_apsta.bin"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/firmware/fw_bcm4329.bin nvram_path=/proc/calibration"
 WIFI_DRIVER_MODULE_NAME     := "bcm4329"
 
-BOARD_USES_GENERIC_AUDIO := false
-
+### Kernel related stuff
 BOARD_KERNEL_CMDLINE := no_console_suspend=1 console=null
 BOARD_KERNEL_BASE := 0x12c00000
 BOARD_KERNEL_PAGESIZE := 2048
 
+TARGET_PREBUILT_KERNEL := device/htc/marvel/prebuilt/kernel
+LOCAL_KERNEL := device/htc/marvel/prebuilt/kernel
+
+### Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
+### Audio
+BOARD_USES_GENERIC_AUDIO := false
+
+### FM radio
 BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
@@ -70,26 +79,15 @@ BOARD_VENDOR_QCOM_AMSS_VERSION := 4735
 
 BOARD_VENDOR_USE_AKMD := akm8975
 
+### Graphics
+BOARD_USES_QCOM_HARDWARE := true
+
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
-
-
-BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
-
-BOARD_USE_NEW_LIBRIL_HTC := true
-
 BOARD_NO_RGBX_8888 := true
 
-BOARD_GPS_LIBRARIES := libloc_api
-
-BOARD_USES_QCOM_HARDWARE := true
-BOARD_USES_QCOM_LIBS := true
-BOARD_USES_QCOM_GPS := true
-BOARD_USES_QCOM_LIBRPC := true
-BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := marvel
-BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
-
+### Touchscreen
 # Allow compatibility with 'old' Touchscreens (Linux < 3.1)
 #
 # Remember to add the new idc file required for the touchscreen/keypad
@@ -97,6 +95,21 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
 #
 # http://review.cyanogenmod.com/#change,10354
 BOARD_USE_LEGACY_TOUCHSCREEN := true
+
+### Browser
+JS_ENGINE:=v8
+
+### GPS
+BOARD_GPS_LIBRARIES := libloc_api
+BOARD_USES_QCOM_LIBS := true
+BOARD_USES_QCOM_GPS := true
+BOARD_USES_QCOM_LIBRPC := true
+BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := marvel
+BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
+
+### RIL
+BOARD_USE_NEW_LIBRIL_HTC := true
+
 
 # # cat /proc/mtd (marvel)
 #dev:    size   erasesize  name
@@ -116,8 +129,6 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x09600000
 BOARD_FLASH_BLOCK_SIZE := 262144
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
-TARGET_PREBUILT_KERNEL := device/htc/marvel/prebuilt/kernel
-LOCAL_KERNEL := device/htc/marvel/prebuilt/kernel
 
 #BOARD_CAMERA_USE_GETBUFFERINFO := true
 #TARGET_SPECIFIC_HEADER_PATH := device/htc/marvel/include
