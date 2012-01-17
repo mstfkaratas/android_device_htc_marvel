@@ -67,6 +67,7 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
 ### Audio
+# http://arunraghavan.net/2012/01/pulseaudio-vs-audioflinger-fight/
 BOARD_USES_GENERIC_AUDIO := false
 
 ### FM radio
