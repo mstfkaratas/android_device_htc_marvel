@@ -83,10 +83,18 @@ BOARD_VENDOR_USE_AKMD := akm8975
 #
 # The adreno200 GLES library has GL_OES_GLES_image_external
 # The adreno200 GLES library should support YV12
+# Remove if we have 3.0 kernel
 COMMON_GLOBAL_CFLAGS += -DMISSING_GRALLOC_BUFFERS
 
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
+
+# TODO
+# This requires a 3.0 kernel
+#
+#TARGET_USES_ION := true
+#TARGET_USES_GENLOCK := true
+#TARGET_USES_OVERLAY := true
 
 ### Touchscreen
 # Allow compatibility with 'old' Touchscreens (Linux < 3.1)
