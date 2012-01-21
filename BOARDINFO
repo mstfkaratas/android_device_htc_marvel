@@ -4,3 +4,4 @@ Sensors
 Gsensor: BOSCH_BMA150
 Compass: AKM8975
 Battery: TPS65200
+Light: CM3602

@@ -1,6 +1,5 @@
 #
 # Copyright (C) 2009 The Android Open Source Project
-# Copyright (C) 2012 Andreas Schneider <asn@cryptomilk.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -95,15 +94,45 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/htc/marvel/media_profiles.xml:system/etc/media_profiles.xml
 
+# device specific
 PRODUCT_PACKAGES += \
-    librs_jni \
     lights.marvel \
-    libOmxCore \
     sensors.marvel \
-    gps.marvel \
+    gps.marvel
+
+# gpu
+PRODUCT_PACKAGES += \
     gralloc.msm7x27 \
     copybit.msm7x27 \
-    com.android.future.usb.accessory
+    hwcomposer.default
+
+# audio
+PRODUCT_PACKAGES += \
+    libtinyalsa \
+    libaudioutils
+
+# omx
+PRODUCT_PACKAGES += \
+    libOmxCore \
+    libOmxVenc \
+    libOmxVdec
+
+# live wallpapers
+PRODUCT_PACKAGES += \
+    LiveWallpapers \
+    LiveWallpapersPicker \
+    VisualizationWallpapers \
+    NoiseField \
+    PhaseBeam \
+    MagicSmoke \
+    Galaxy4 \
+    HoloSpiralWallpaper \
+    librs_jni
+
+# missing packages
+PRODUCT_PACKAGES += \
+    com.android.future.usb.accessory \
+    Superuser
 
 PRODUCT_COPY_FILES += \
     device/htc/marvel/vold.fstab:system/etc/vold.fstab \
