@@ -1,5 +1,4 @@
 # Copyright (C) 2009 The Android Open Source Project
-# Copyright (C) 2012 Andreas Schneider <asn@cryptomilk.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -89,6 +88,7 @@ COMMON_GLOBAL_CFLAGS += -DMISSING_GRALLOC_BUFFERS
 
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
+USE_OPENGL_RENDERER := true
 
 # TODO
 # This requires a 3.0 kernel
