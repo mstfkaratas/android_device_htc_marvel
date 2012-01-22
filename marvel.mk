@@ -136,7 +136,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     device/htc/marvel/vold.fstab:system/etc/vold.fstab \
-    device/htc/marvel/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
+    device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
+    device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/cy8c-touchscreen.idc \
     device/common/gps/gps.conf_EU_SUPL:system/etc/gps.conf
 
 # Kernel modules

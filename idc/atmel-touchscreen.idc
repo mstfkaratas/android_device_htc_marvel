@@ -1,4 +1,4 @@
-# Copyright (C) 2010 The Android Open Source Project
+# Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,39 +13,31 @@
 # limitations under the License.
 
 #
-# Input Device Configuration File for the Stingray touch screen.
+# Input Device Calibration File for the HTC Wildfire S touch screen.
 #
 
 # Basic Parameters
 touch.deviceType = touchScreen
+
+# Orientation
 touch.orientationAware = 1
+touch.orientation.calibration = none
 
-# Touch Size
-touch.touchSize.calibration = pressure
+# Size
+touch.toolSize.calibration = linear
+touch.toolSize.linearScale = 10
+touch.toolSize.linearBias = 160
+touch.toolSize.isSummed = 1
 
-# Tool Size
-# Driver reports tool size as an area measurement.
-#
-# Based on empirical measurements, we estimate the size of the tool
-# using size = sqrt(22 * rawToolArea + 0) * 9.2 + 0.
-touch.toolSize.calibration = area
-touch.toolSize.areaScale = 22
-touch.toolSize.areaBias = 0
-touch.toolSize.linearScale = 9.2
-touch.toolSize.linearBias = 0
-touch.toolSize.isSummed = 0
+# Calibration
+touch.size.calibration = normalized
 
 # Pressure
 # Driver reports signal strength as pressure.
 #
-# A normal thumb touch typically registers about 100 signal strength
+# A normal thumb touch typically registers about 200 signal strength
 # units although we don't expect these values to be accurate.
 touch.pressure.calibration = amplitude
 touch.pressure.source = default
 touch.pressure.scale = 0.01
 
-# Size
-touch.size.calibration = default
-
-# Orientation
-touch.orientation.calibration = none
