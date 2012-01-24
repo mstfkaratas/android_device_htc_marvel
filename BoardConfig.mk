@@ -29,6 +29,9 @@ BOARD_USE_FROYO_LIBCAMERA := true
 # inherit from the proprietary version
 -include vendor/htc/marvel/BoardConfigVendor.mk
 
+# Provide missing header files
+TARGET_SPECIFIC_HEADER_PATH := device/htc/marvel/include
+
 ### Board config
 TARGET_BOARD_PLATFORM := msm7x27
 TARGET_ARCH_VARIANT := armv6-vfp
@@ -140,7 +143,6 @@ BOARD_FLASH_BLOCK_SIZE := 262144
 TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
 
 #BOARD_CAMERA_USE_GETBUFFERINFO := true
-#TARGET_SPECIFIC_HEADER_PATH := device/htc/marvel/include
 
 #TARGET_PREBUILT_RECOVERY_KERNEL := device/htc/marvel/prebuilt/recovery_kernel
 #BOARD_USES_RECOVERY_CHARGEMODE := true

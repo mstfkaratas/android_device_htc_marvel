@@ -26,7 +26,6 @@
 #define PMEM_CACHE_FLUSH _IOW(PMEM_IOCTL_MAGIC, 8, unsigned int)
 
 #define PMEM_CLEAN_INV_CACHES _IOW(PMEM_IOCTL_MAGIC, 11, unsigned int)
-#define PMEM_CLEAN_CACHES _IOW(PMEM_IOCTL_MAGIC, 12, unsigned int)
 
 #define PMEM_ALLOCATE_ALIGNED _IOW(PMEM_IOCTL_MAGIC, 15, unsigned int)
 
