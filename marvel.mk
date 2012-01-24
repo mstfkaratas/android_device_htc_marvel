@@ -104,7 +104,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gralloc.msm7x27 \
     copybit.msm7x27 \
-    hwcomposer.default
+    hwcomposer.msm7x27
 
 # audio
 PRODUCT_PACKAGES += \
