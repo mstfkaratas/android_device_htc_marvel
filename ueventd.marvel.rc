@@ -67,3 +67,5 @@
 
 /dev/kgsl-2d0           0666    root        root
 /dev/kgsl-3d0           0666    root        root
+
+/dev/genlock            0666    root        root
