@@ -27,7 +27,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     device/htc/marvel/ueventd.marvel.rc:root/ueventd.marvel.rc\
-    device/htc/marvel/init.rc:root/init.rc \
     device/htc/marvel/init.marvel.rc:root/init.marvel.rc
 
 PRODUCT_PROPERTY_OVERRIDES += \
