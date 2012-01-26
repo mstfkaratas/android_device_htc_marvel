@@ -14,6 +14,10 @@
 
 #include <linux/types.h>
 
+#ifndef uint32_t
+typedef __u32 uint32_t;
+#endif
+
 #define MSMFB_IOCTL_MAGIC 'm'
 #define MSMFB_GRP_DISP _IOW(MSMFB_IOCTL_MAGIC, 1, unsigned int)
 #define MSMFB_BLIT _IOW(MSMFB_IOCTL_MAGIC, 2, unsigned int)
