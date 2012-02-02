@@ -134,6 +134,9 @@ $(call inherit-product, device/htc/common/common.mk)
 
 $(call inherit-product, build/target/product/full_base.mk)
 
-
-PRODUCT_NAME := generic_marvel
+## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := marvel
+PRODUCT_NAME := htc_marvel
+PRODUCT_BRAND := htc_europe
+PRODUCT_MODEL := HTC Wildfire S A510e
+PRODUCT_MANUFACTURER := HTC
