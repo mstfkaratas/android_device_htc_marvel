@@ -1,8 +1,4 @@
 on boot
-    mount debugfs /sys/kernel/debug /sys/kernel/debug
-
-    mkdir /mnt/sdcard 0000 system system
-
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
@@ -29,6 +25,11 @@ on boot
    # flashlight
     chown system camera /sys/devices/platform/flashlight.0/leds/flashlight/brightness
     chmod 0660 /sys/devices/platform/flashlight.0/leds/flashlight/brightness
+
+on early-init
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+    mkdir /mnt/sdcard 0000 system system
 
 on init
     mount rootfs rootfs / remount
