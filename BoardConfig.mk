@@ -24,7 +24,6 @@
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
 USE_CAMERA_STUB := false
-BOARD_USE_FROYO_LIBCAMERA := true
 
 # inherit from the proprietary version
 -include vendor/htc/marvel/BoardConfigVendor.mk
@@ -72,6 +71,9 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 ### Audio
 # http://arunraghavan.net/2012/01/pulseaudio-vs-audioflinger-fight/
 BOARD_USES_GENERIC_AUDIO := false
+
+### Camera
+BUILD_OLD_LIBCAMERA := true
 
 ### FM radio
 BOARD_HAVE_FM_RADIO := true
