@@ -89,13 +89,7 @@ COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
 USE_OPENGL_RENDERER := true
-
-# TODO
-# This requires a 3.0 kernel
-#
-#TARGET_USES_ION := true
-#TARGET_USES_GENLOCK := true
-#TARGET_USES_OVERLAY := true
+TARGET_USES_GENLOCK := true
 
 ### Touchscreen
 # Allow compatibility with 'old' Touchscreens (Linux < 3.1)
