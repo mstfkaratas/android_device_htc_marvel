@@ -97,7 +97,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     lights.marvel \
     sensors.marvel \
-    gps.marvel
+    gps.marvel \
+    audio.primary.marvel \
+    audio_policy.marvel
 
 # gpu
 PRODUCT_PACKAGES += \
