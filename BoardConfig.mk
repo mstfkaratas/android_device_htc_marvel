@@ -84,10 +84,7 @@ BOARD_VENDOR_USE_AKMD := akm8975
 
 ### Graphics
 # http://www.slideshare.net/jserv/design-and-concepts-of-android-graphics
-
-# See https://github.com/CyanogenMod/android_frameworks_base/commit/fc496c0607d0d2863ff9587019e890ab806ea49d
-#
-COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
