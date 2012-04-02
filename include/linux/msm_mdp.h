@@ -26,6 +26,7 @@ typedef __u32 uint32_t;
 #define MSMFB_OVERLAY_PLAY _IOW(MSMFB_IOCTL_MAGIC, 137, struct msmfb_overlay_data)
 #define MSMFB_OVERLAY_GET _IOR(MSMFB_IOCTL_MAGIC, 140, struct mdp_overlay)
 #define MSMFB_OVERLAY_3D _IOWR(MSMFB_IOCTL_MAGIC, 147, struct msmfb_overlay_3d)
+#define MSMFB_MIXER_INFO _IOWR(MSMFB_IOCTL_MAGIC, 148, struct msmfb_mixer_info_req)
 #define MSMFB_OVERLAY_PLAY_WAIT _IOWR(MSMFB_IOCTL_MAGIC, 149, struct msmfb_overlay_data)
 
 #define FB_TYPE_3D_PANEL 0x10101010
@@ -38,6 +39,7 @@ enum {
  MDP_ARGB_8888,
  MDP_RGB_888,
  MDP_Y_CRCB_H2V2,
+ MDP_Y_CBCR_H2V2_ADRENO,
  MDP_YCRYCB_H2V1,
  MDP_Y_CRCB_H2V1,
  MDP_Y_CBCR_H2V1,
@@ -72,14 +74,31 @@ enum {
 #define MDP_BLUR 0x10
 #define MDP_BLEND_FG_PREMULT 0x20000
 #define MDP_DEINTERLACE 0x80000000
+#define MDP_SHARPENING  0x40000000
 #define MDP_BLIT_NON_CACHED 0x01000000
 #define MDP_OV_PIPE_SHARE 0x00800000
 #define MDP_OV_PLAY_NOWAIT 0x00200000
 #define MDP_SOURCE_ROTATED_90 0x00100000
+#define MDP_BORDERFILL_SUPPORTED 0x00010000
 #define MDP_MEMORY_ID_TYPE_FB 0x00001000
+#define MDP_SECURE_OVERLAY_SESSION 0x00008000
 
 #define MDP_TRANSP_NOP 0xffffffff
 #define MDP_ALPHA_NOP 0xff
+
+enum {
+ MDP_BLOCK_RESERVED = 0,
+ MDP_BLOCK_OVERLAY_0,
+ MDP_BLOCK_OVERLAY_1,
+ MDP_BLOCK_VG_1,
+ MDP_BLOCK_VG_2,
+ MDP_BLOCK_RGB_1,
+ MDP_BLOCK_RGB_2,
+ MDP_BLOCK_DMA_P,
+ MDP_BLOCK_DMA_S,
+ MDP_BLOCK_DMA_E,
+ MDP_BLOCK_MAX,
+};
 
 struct mdp_rect {
  uint32_t x;
@@ -134,6 +153,19 @@ struct msmfb_img {
  uint32_t format;
 };
 
+enum {
+ HSIC_HUE = 0,
+ HSIC_SAT,
+ HSIC_INT,
+ HSIC_CON,
+ NUM_HSIC_PARAM,
+};
+
+struct dpp_ctrl {
+ int8_t sharp_strength;
+ int8_t hsic_params[NUM_HSIC_PARAM];
+};
+
 struct mdp_overlay {
  struct msmfb_img src;
  struct mdp_rect src_rect;
@@ -145,12 +177,29 @@ struct mdp_overlay {
  uint32_t flags;
  uint32_t id;
  uint32_t user_data[8];
+ struct dpp_ctrl dpp;
 };
 
 struct msmfb_overlay_3d {
  uint32_t is_3d;
  uint32_t width;
  uint32_t height;
+};
+
+struct mdp_mixer_info {
+ int pndx;
+ int pnum;
+ int ptype;
+ int mixer_num;
+ int z_order;
+};
+
+#define MAX_PIPE_PER_MIXER  4
+
+struct msmfb_mixer_info_req {
+ int mixer_num;
+ int cnt;
+ struct mdp_mixer_info info[MAX_PIPE_PER_MIXER];
 };
 
 #endif
