@@ -84,7 +84,7 @@ BOARD_VENDOR_USE_AKMD := akm8975
 
 ### Graphics
 # http://www.slideshare.net/jserv/design-and-concepts-of-android-graphics
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DREFRESH_RATE=60
 
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
