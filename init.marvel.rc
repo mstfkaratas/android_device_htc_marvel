@@ -2,7 +2,7 @@ on boot
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
+    mkdir /data/misc/hotspot 0770 system hotspot
 
     # bluetooth power up/down interface
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
@@ -12,6 +12,10 @@ on boot
     # bluetooth MAC address programming
     chown bluetooth bluetooth /sys/module/board_marvel/parameters/bdaddress
     setprop ro.bt.bdaddr_path /sys/module/board_marvel/parameters/bdaddress
+
+    # for charging function
+    chown radio radio /sys/class/power_supply/battery/charger_control
+    chmod 0660        /sys/class/power_supply/battery/charger_control
 
     # Permissions for Liblights.
     chown system system /sys/class/leds/green/brightness
@@ -49,12 +53,6 @@ on init
     setprop ro.CONTENT_PROVIDER_MEM 7680
     setprop ro.EMPTY_APP_MEM 8192
 
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
-    mkdir /data/misc/hotspot 0770 system hotspot
-
     chown system system /sys/module/serial/parameters/modem_enabled
     chown system system /dev/ttyHSUSB0
     chown system system /dev/smd9
@@ -83,15 +81,18 @@ service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
 #   after setting up the capabilities required for WEXT
 #   user wifi
 #   group wifi inet keystore
+    class main
     socket wpa_eth0 dgram 660 wifi wifi
     disabled
     oneshot
 
 service dhcpcd_eth0 /system/bin/dhcpcd -ABKL eth0
+    class main
     disabled
     oneshot
 
 service iprenew_eth0 /system/bin/dhcpcd -n
+    class main
     disabled
     oneshot
 
@@ -105,6 +106,9 @@ on property:service.modem.enable=1
 
 on property:service.modem.enable=0
     stop modem
+
+on property:init.svc.wpa_supplicant=stopped
+    stop dhcpcd
 
 # compass/accelerometer daemon
 service akmd /system/bin/akmd
