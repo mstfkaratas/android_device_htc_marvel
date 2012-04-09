@@ -23,7 +23,7 @@
 # WARNING: This line must come *before* including the proprietary
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
-USE_CAMERA_STUB := false
+USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
 -include vendor/htc/marvel/BoardConfigVendor.mk
@@ -111,8 +111,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := marvel
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
 
 ### RIL
-TARGET_PROVIDES_LIBRIL := true
-
+BOARD_USE_NEW_LIBRIL_HTC := true
 
 # # cat /proc/mtd (marvel)
 #dev:    size   erasesize  name
