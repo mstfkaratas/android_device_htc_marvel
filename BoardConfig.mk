@@ -71,10 +71,9 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 ### Audio
 # http://arunraghavan.net/2012/01/pulseaudio-vs-audioflinger-fight/
 BOARD_USES_GENERIC_AUDIO := false
-TARGET_PROVIDES_LIBAUDIO := true
-
-### Camera
-BUILD_OLD_LIBCAMERA := true
+TARGET_PROVIDES_LIBAUDIO := false
+BOARD_USES_QCOM_VOIPMUTE := true
+BOARD_USES_QCOM_RESETALL := true
 
 ### FM radio
 BOARD_HAVE_FM_RADIO := true
