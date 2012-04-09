@@ -77,7 +77,7 @@ rild.libpath=/system/lib/libhtc_ril.so
 # RilLibPath for Ganlite by Godel_Chen
 rilswitch.vendorlibpath=/system/lib/libhtc_ril.so
 rild.libpath=/system/lib/libreference-ril.so
-rild.libargs=-d /dev/smd0 
+rild.libargs=-d /dev/smd0
 
 ro.ril.hep = 1
 ro.ril.enable.dtm = 0
@@ -133,12 +133,12 @@ ro.ril.disable.power.collapse = 1
 ro.ril.avoid.pdp.overlap = 1
 
 # Release Bluetooth HW/SW information
-ro.bt.chipset	= Broadcom BCM4329-B1
-ro.bt.version	= Bluetooth 2.1 + EDR
-ro.bt.stack	= Broadcom BTL-A
-ro.bt.stack.version	= 2.2.017
+ro.bt.chipset = Broadcom BCM4329-B1
+ro.bt.version = Bluetooth 2.1 + EDR
+ro.bt.stack = Broadcom BTL-A
+ro.bt.stack.version = 2.2.017
 #0x10000010010100100000011 represent bt profile list
-ro.bt.profiles	= 4270339
+ro.bt.profiles = 4270339
 
 # Properties of BTLA stack
 service.brcm.bt.activation = 0
