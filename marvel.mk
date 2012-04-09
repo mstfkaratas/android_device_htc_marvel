@@ -26,7 +26,8 @@ PRODUCT_COPY_FILES += \
     device/htc/marvel/key/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl
 
 PRODUCT_COPY_FILES += \
-    device/htc/marvel/ueventd.marvel.rc:root/ueventd.marvel.rc\
+    device/htc/marvel/ueventd.marvel.rc:root/ueventd.marvel.rc \
+    device/htc/marvel/init.marvel.usb.rc:root/init.marvel.usb.rc \
     device/htc/marvel/init.marvel.rc:root/init.marvel.rc
 
 PRODUCT_PROPERTY_OVERRIDES += \
