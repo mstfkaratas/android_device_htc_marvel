@@ -112,6 +112,10 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 20000
 ### RIL
 BOARD_USE_NEW_LIBRIL_HTC := true
 
+### CAMERA
+# This is needed by libcamera.so
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+
 # # cat /proc/mtd (marvel)
 #dev:    size   erasesize  name
 #mtd0: 00100000 00040000 "misc"

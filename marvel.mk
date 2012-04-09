@@ -100,6 +100,7 @@ PRODUCT_PACKAGES += \
     lights.marvel \
     sensors.marvel \
     gps.marvel \
+    camera.marvel \
     audio.primary.marvel \
     audio_policy.marvel
 
