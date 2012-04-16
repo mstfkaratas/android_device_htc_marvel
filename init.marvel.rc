@@ -1,7 +1,6 @@
 import init.liberty.usb.rc
 
 on early-init
-
     #sdcard
     export EXTERNAL_STORAGE /mnt/sdcard
     mkdir /mnt/sdcard 0000 system system
@@ -13,11 +12,6 @@ on early-init
 
 
 on early-fs
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    mkdir /data/misc/hotspot 0770 system hotspot
-
     # bluetooth power up/down interface
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
@@ -56,8 +50,8 @@ on init
     mkdir /data/app-cache 0771 system system
     mount rootfs rootfs / ro remount
 
-# Define the memory thresholds at which the above process classes will
-# be killed.  These numbers are in pages (4k).
+    # Define the memory thresholds at which the above process classes will
+    # be killed.  These numbers are in pages (4k).
     setprop ro.FOREGROUND_APP_MEM 3584
     setprop ro.VISIBLE_APP_MEM 4096
     setprop ro.SECONDARY_SERVER_MEM 6144
@@ -73,21 +67,35 @@ on init
     chown radio radio /sys/module/msm_flashlight/parameters/phone_status
     # chown system system /sys/class/leds/wimax/brightness
 
+    # Overwrite framework low memory killer minfree setting
+    write /sys/module/lowmemorykiller/parameters/minfree 3584,4096,6144,7168,7680,8192
+
+    # Enable low memory killer to check file pages
+    write /sys/module/lowmemorykiller/parameters/minfile 0,0,0,5120,5632,6144
+    write /sys/module/lowmemorykiller/parameters/check_filepages 1
+
+    # performance tweaks for flash
+    write /sys/block/mtdblock3/bdi/read_ahead_kb 4
+    write /sys/block/mtdblock4/bdi/read_ahead_kb 4
+    write /sys/block/mtdblock5/bdi/read_ahead_kb 4
+
+#on fs
+
+#on post-fs
+
+on post-fs-data
     # For FM radio/music by Welly_Fang's request
     mkdir /data/data/shared
     chmod 0777 /data/data/shared
 
-# Overwrite framework low memory killer minfree setting
-    write /sys/module/lowmemorykiller/parameters/minfree 3584,4096,6144,7168,7680,8192
+    # Wifi
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/misc/hotspot 0770 system hotspot
 
-# Enable low memory killer to check file pages
-    write /sys/module/lowmemorykiller/parameters/minfile 0,0,0,5120,5632,6144
-    write /sys/module/lowmemorykiller/parameters/check_filepages 1
 
-# performance tweaks for flash
-   write /sys/block/mtdblock3/bdi/read_ahead_kb 4
-   write /sys/block/mtdblock4/bdi/read_ahead_kb 4
-   write /sys/block/mtdblock5/bdi/read_ahead_kb 4
+## Daemon processes to be run by init.
 
 service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
     -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
