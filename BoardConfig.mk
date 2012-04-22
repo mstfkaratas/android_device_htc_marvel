@@ -48,7 +48,7 @@ BOARD_VENDOR_QCOM_AMSS_VERSION := 4735
 
 ### Kernel
 TARGET_KERNEL_SOURCE := kernel/htc/msm7227
-TARGET_KERNEL_CONFIG := cm_marvel_defconfig
+TARGET_KERNEL_CONFIG := cyanogen_msm7227_defconfig
 
 ### Wifi related defines
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
