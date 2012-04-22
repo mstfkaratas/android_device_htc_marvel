@@ -44,7 +44,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface = wlan0 \
     wifi.supplicant_scan_interval=15 \
     ro.sf.lcd_density = 160 \
-    ro.opengles.version=131072
+    ro.opengles.version=131072 \
+    ro.htc.camerahack=msm7k
 
 # Default network type.
 # 0 => WCDMA preferred.

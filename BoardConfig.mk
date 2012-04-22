@@ -90,12 +90,15 @@ BOARD_VENDOR_USE_AKMD := akm8975
 
 ### Graphics
 # http://www.slideshare.net/jserv/design-and-concepts-of-android-graphics
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DREFRESH_RATE=60
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DREFRESH_RATE=60 -DBINDER_COMPAT
 
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_EGL_CFG := device/htc/marvel/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_USES_GENLOCK := true
+
+### Camera
+BOARD_USES_HTC_CAMERA := true
 
 ### Touchscreen
 # Allow compatibility with 'old' Touchscreens (Linux < 3.1)
