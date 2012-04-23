@@ -102,6 +102,7 @@ PRODUCT_PACKAGES += \
     sensors.marvel \
     gps.marvel \
     camera.marvel \
+    audio.a2dp.default \
     audio.primary.marvel \
     audio_policy.marvel
 
