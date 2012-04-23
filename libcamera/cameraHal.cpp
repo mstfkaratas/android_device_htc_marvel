@@ -144,8 +144,13 @@ CameraHAL_CopyBuffers_Hw(int srcFd, int destFd,
 
     blit.req.dst.width     = w;
     blit.req.dst.height    = h;
+#if 0
+    /* TODO Fix destination offset handling. */
     blit.req.dst.offset    = destOffset;
-    blit.req.dst.memory_id = destFd; 
+#else
+    blit.req.dst.offset    = 0;
+#endif
+    blit.req.dst.memory_id = destFd;
     blit.req.dst.format    = destFormat;
 
     blit.req.src_rect.x = blit.req.dst_rect.x = x;
