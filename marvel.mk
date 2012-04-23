@@ -14,10 +14,23 @@
 # limitations under the License.
 #
 
+## (1) First, the most specific values, i.e. the aspects that are specific to GSM
+
+$(call inherit-product, build/target/product/full_base.mk)
+$(call inherit-product, build/target/product/languages_full.mk)
+
+# stuff common to all HTC phones
+$(call inherit-product, device/htc/common/common.mk)
+
+$(call inherit-product, device/common/gps/gps_eu_supl.mk)
+
+# dalvik heap config for devices with 512MB memory
+$(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
+
+# media profiles and capabilities spec
+$(call inherit-product, device/htc/marvel/media_a1026.mk)
 
 DEVICE_PACKAGE_OVERLAYS := device/htc/marvel/overlay
-
-## (1) First, the most specific values, i.e. the aspects that are specific to GSM
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -55,8 +68,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # For emmc phone storage
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.phone_storage = 0
-
-## (1) First, the most specific values, i.e. the aspects that are specific to GSM
 
 ## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/marvel/marvel-vendor.mk)
@@ -138,24 +149,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/htc/marvel/vold.fstab:system/etc/vold.fstab \
     device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
-    device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/cy8c-touchscreen.idc \
-    device/common/gps/gps.conf_EU_SUPL:system/etc/gps.conf
+    device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/cy8c-touchscreen.idc
 
 # Prebuilt modules or firmware
 PRODUCT_COPY_FILES += \
     device/htc/marvel/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
     device/htc/marvel/firmware/fw_bcm4329.bin:system/etc/firmware/fw_bcm4329.bin \
     device/htc/marvel/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin
-
-# media profiles and capabilities spec
-$(call inherit-product, device/htc/marvel/media_a1026.mk)
-
-# stuff common to all HTC phones
-$(call inherit-product, device/htc/common/common.mk)
-
-$(call inherit-product, build/target/product/full_base.mk)
-
-$(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
 
 PRODUCT_NAME := generic_marvel
 PRODUCT_DEVICE := marvel
