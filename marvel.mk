@@ -56,11 +56,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.phone_storage = 0
 
-
-# This is a 512MB device, so 32mb heapsize
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapsize=32m
-
 ## (1) First, the most specific values, i.e. the aspects that are specific to GSM
 
 ## (2) Also get non-open-source GSM-specific aspects if available
@@ -160,6 +155,7 @@ $(call inherit-product, device/htc/common/common.mk)
 
 $(call inherit-product, build/target/product/full_base.mk)
 
+$(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
 
 PRODUCT_NAME := generic_marvel
 PRODUCT_DEVICE := marvel
