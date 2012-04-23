@@ -118,11 +118,10 @@ PRODUCT_PACKAGES += \
     libtinyalsa \
     libaudioutils
 
-# omx
+# OMX
 PRODUCT_PACKAGES += \
-    libOmxCore \
-    libOmxVenc \
-    libOmxVdec
+    libstagefrighthw \
+    libOmxCore
 
 # live wallpapers
 PRODUCT_PACKAGES += \
