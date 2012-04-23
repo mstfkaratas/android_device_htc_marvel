@@ -38,9 +38,9 @@ struct qcom_mdp_rect {
 
 struct qcom_mdp_img {
    uint32_t width;
-   int32_t  height;
-   int32_t  format;
-   int32_t  offset;
+   uint32_t height;
+   uint32_t format;
+   uint32_t offset;
    int      memory_id; /* The file descriptor */
 };
 
@@ -52,10 +52,11 @@ struct qcom_mdp_blit_req {
    uint32_t alpha;
    uint32_t transp_mask;
    uint32_t flags;
+   int sharpening_strength;  /* -127 <--> 127, default 64 */
 };
 
 struct blitreq {
-   unsigned int count;
+   uint32_t count;
    struct qcom_mdp_blit_req req;
 };
 
@@ -130,9 +131,10 @@ CameraHAL_CopyBuffers_Hw(int srcFd, int destFd,
     memset(&blit, 0, sizeof(blit));
     blit.count = 1;
 
-    blit.req.flags       = 0;
-    blit.req.alpha       = 0xff;
-    blit.req.transp_mask = 0xffffffff;
+    blit.req.flags               = 0;
+    blit.req.alpha               = 0xff;
+    blit.req.transp_mask         = 0xffffffff;
+    blit.req.sharpening_strength = 64;  /* -127 <--> 127, default 64 */
 
     blit.req.src.width     = w;
     blit.req.src.height    = h;
