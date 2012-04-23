@@ -28,6 +28,7 @@
 /dev/pmem                 0660   system     graphics
 /dev/pmem_adsp*           0660   system     audio
 /dev/graphics/*           0660   media      graphics
+/dev/msm_vidc*            0660   system     graphics
 
 # Audio
 /dev/adsp/*               0660   system     audio
@@ -38,9 +39,6 @@
 /dev/msm_pcm_in*          0660   system     audio
 /dev/msm_pcm_ctl*         0660   system     audio
 /dev/msm_snd*             0660   system     audio
-/dev/msm_vidc_dec         0660   system     audio
-/dev/msm_vidc_enc         0660   system     audio
-/dev/msm_vidc_reg         0660   system     audio
 
 # Radio
 /dev/qmi                  0640   radio      radio
