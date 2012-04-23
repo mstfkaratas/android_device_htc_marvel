@@ -110,7 +110,10 @@ BOARD_USES_HTC_CAMERA := true
 BOARD_USE_LEGACY_TOUCHSCREEN := true
 
 ### Browser
-JS_ENGINE:=v8
+JS_ENGINE := v8
+HTTP := chrome
+WITH_JIT := true
+ENABLE_JSC_JIT := true
 
 ### GPS
 BOARD_USES_QCOM_LIBS := true
