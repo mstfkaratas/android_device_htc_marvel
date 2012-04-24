@@ -56,10 +56,8 @@ com.qc.hdmi_out=false
 
 ###
 # USB Mount
-#
-# Turn on for production.
-#persist.sys.usb.config=mass_storage,adb
-#persist.service.adb.enable=1
+persist.sys.usb.config=mass_storage,adb
+persist.service.adb.enable=1
 
 # ril
 ro.ril.ecc.HTC-GCC=999,112,997
