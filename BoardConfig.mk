@@ -50,6 +50,9 @@ BOARD_VENDOR_QCOM_AMSS_VERSION := 4735
 TARGET_KERNEL_SOURCE := kernel/htc/msm7227
 TARGET_KERNEL_CONFIG := cyanogen_msm7227_defconfig
 
+### USB Mass Storage
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+
 ### Wifi related defines
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WLAN_DEVICE           := bcm4329
