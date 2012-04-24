@@ -144,7 +144,8 @@ PRODUCT_PACKAGES += \
 # missing packages
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
-    Superuser
+    Superuser \
+    Torch
 
 PRODUCT_COPY_FILES += \
     device/htc/marvel/vold.fstab:system/etc/vold.fstab \
