@@ -1,4 +1,4 @@
-import init.liberty.usb.rc
+import init.marvel.usb.rc
 
 on early-init
     #sdcard
