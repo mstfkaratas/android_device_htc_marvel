@@ -103,7 +103,7 @@ dalvik.vm.dexopt-data-only=1
 # 0 => WCDMA Preferred.
 ro.telephony.default_network = 0
 # Enable old RIL features
-ro.telephony.ril.v3 = signalstrength,skipbrokendatacall,datacall
+ro.telephony.ril.v3 = signalstrength,skipbrokendatacall
 
 # View configuration for QVGA
 view.fading_edge_length = 8
