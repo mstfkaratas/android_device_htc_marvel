@@ -100,9 +100,6 @@ BOARD_EGL_CFG := device/htc/marvel/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_USES_GENLOCK := true
 
-### Camera
-BOARD_USES_HTC_CAMERA := true
-
 ### Touchscreen
 # Allow compatibility with 'old' Touchscreens (Linux < 3.1)
 #
