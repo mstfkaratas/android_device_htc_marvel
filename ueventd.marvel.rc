@@ -20,7 +20,6 @@
 
 # Camera
 /dev/msm_camera/*         0660   media      system
-/dev/pmem_camera*         0660   system     camera
 
 # Graphics
 /dev/kgsl-3d0             0666   root       root

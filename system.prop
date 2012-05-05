@@ -121,6 +121,7 @@ ro.ril.def.agps.mode = 2
 
 # For no auto focus devices
 ro.workaround.noautofocus = 1
+debug.camcorder.disablemeta = 1
 
 # default value of brightness
 settings.display.brightness=143
