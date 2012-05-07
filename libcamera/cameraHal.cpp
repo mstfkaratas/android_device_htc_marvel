@@ -864,7 +864,7 @@ char *camera_get_parameters(struct camera_device *device)
     LOGV("%s+++: device %p", __FUNCTION__, device);
 
     if (device == NULL) {
-        return rv;
+        return NULL;
     }
 
     dev = (priv_camera_device_t*) device;
@@ -920,7 +920,7 @@ void camera_release(struct camera_device *device)
     LOGV("%s+++: device %p", __FUNCTION__, device);
 
     if (device == NULL) {
-        return rv;
+        return;
     }
 
     dev = (priv_camera_device_t*) device;
