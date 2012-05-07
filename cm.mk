@@ -1,5 +1,8 @@
 PRODUCT_RELEASE_NAME := CRYPTOMILK
 
+# Boot animation
+TARGET_BOOTANIMATION_NAME := vertical-320x480
+
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 $(call inherit-product, vendor/cm/config/gsm.mk)
