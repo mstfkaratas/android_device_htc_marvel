@@ -1,13 +1,16 @@
-/dev/system_bus_freq    0660    system      system
-/dev/cpu_dma_latency    0660    system      system
+/dev/system_bus_freq      0660   system     system
+/dev/cpu_dma_latency      0660   system     system
+
+# tty
+/dev/tty                  0666   root       root
 
 # ADB
 /dev/android_adb          0660   adb        adb
 /dev/android_adb_enable   0660   adb        adb
 
 # G-Sensor and compass
-/dev/akm8975_daemon       0640    compass     system
-/dev/akm8975_aot          0640    compass     system
+/dev/akm8975_daemon       0640   compass    system
+/dev/akm8975_aot          0640   compass    system
 /dev/bma150               0640   compass    system
 /dev/cm3602               0640   compass    system
 
