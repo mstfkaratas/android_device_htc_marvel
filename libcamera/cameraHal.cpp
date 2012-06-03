@@ -38,10 +38,36 @@
 #endif
 
 //#define LOGV LOGI
+struct qcom_mdp_rect {
+   uint32_t x;
+   uint32_t y;
+   uint32_t w;
+   uint32_t h;
+};
+
+struct qcom_mdp_img {
+   uint32_t width;
+   int32_t  height;
+   int32_t  format;
+   int32_t  offset;
+   int      memory_id; /* The file descriptor */
+   uint32_t priv; // CONFIG_ANDROID_PMEM
+};
+
+struct qcom_mdp_blit_req {
+   struct   qcom_mdp_img src;
+   struct   qcom_mdp_img dst;
+   struct   qcom_mdp_rect src_rect;
+   struct   qcom_mdp_rect dst_rect;
+   uint32_t alpha;
+   uint32_t transp_mask;
+   uint32_t flags;
+   int sharpening_strength;  /* -127 <--> 127, default 64 */
+};
 
 struct blitreq {
    unsigned int count;
-   struct mdp_blit_req req;
+   struct qcom_mdp_blit_req req;
 };
 
 /* Prototypes and extern functions. */
@@ -125,6 +151,7 @@ CameraHAL_CopyBuffers_Hw(int srcFd, int destFd,
     blit.req.flags       = 0;
     blit.req.alpha       = 0xff;
     blit.req.transp_mask = 0xffffffff;
+    blit.req.sharpening_strength = 64;  /* -127 <--> 127, default 64 */
 
     blit.req.src.width     = w;
     blit.req.src.height    = h;
@@ -217,6 +244,73 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
                             camera_request_memory getMemory,
                             int32_t previewWidth, int32_t previewHeight)
 {
+=======
+}
+
+void
+CameraHal_Decode_Sw(unsigned int* rgb, char* yuv420sp, int width, int height)
+{
+   int frameSize = width * height;
+
+   if (!qCamera->previewEnabled()) return;
+
+   for (int j = 0, yp = 0; j < height; j++) {
+      int uvp = frameSize + (j >> 1) * width, u = 0, v = 0;
+      for (int i = 0; i < width; i++, yp++) {
+         int y = (0xff & ((int) yuv420sp[yp])) - 16;
+         if (y < 0) y = 0;
+         if ((i & 1) == 0) {
+            v = (0xff & yuv420sp[uvp++]) - 128;
+            u = (0xff & yuv420sp[uvp++]) - 128;
+         }
+
+         int y1192 = 1192 * y;
+         int r = (y1192 + 1634 * v);
+         int g = (y1192 - 833 * v - 400 * u);
+         int b = (y1192 + 2066 * u);
+
+         if (r < 0) r = 0; else if (r > 262143) r = 262143;
+         if (g < 0) g = 0; else if (g > 262143) g = 262143;
+         if (b < 0) b = 0; else if (b > 262143) b = 262143;
+
+         rgb[yp] = 0xff000000 | ((b << 6) & 0xff0000) |
+                   ((g >> 2) & 0xff00) | ((r >> 10) & 0xff);
+      }
+   }
+}
+
+void
+CameraHAL_CopyBuffers_Sw(char *dest, char *src, int size)
+{
+   int       i;
+   int       numWords  = size / sizeof(unsigned);
+   unsigned *srcWords  = (unsigned *)src;
+   unsigned *destWords = (unsigned *)dest;
+
+   for (i = 0; i < numWords; i++) {
+      if ((i % 8) == 0 && (i + 8) < numWords) {
+         __builtin_prefetch(srcWords  + 8, 0, 0);
+         __builtin_prefetch(destWords + 8, 1, 0);
+      }
+      *destWords++ = *srcWords++;
+   }
+   if (__builtin_expect((size - (numWords * sizeof(unsigned))) > 0, 0)) {
+      int numBytes = size - (numWords * sizeof(unsigned));
+      char *destBytes = (char *)destWords;
+      char *srcBytes  = (char *)srcWords;
+      for (i = 0; i < numBytes; i++) {
+         *destBytes++ = *srcBytes++;
+      }
+   }
+}
+
+void
+CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
+                            preview_stream_ops_t *mWindow,
+                            camera_request_memory getMemory,
+                            int32_t previewWidth, int32_t previewHeight)
+{
+>>>>>>> libcamera: Update to camera hal from zte blade.
    if (mWindow != NULL && getMemory != NULL) {
       ssize_t  offset;
       size_t   size;
@@ -240,6 +334,10 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
                          GRALLOC_USAGE_PMEM_PRIVATE_ADSP |
 #endif
                          GRALLOC_USAGE_SW_READ_OFTEN);
+<<<<<<< HEAD
+=======
+
+>>>>>>> libcamera: Update to camera hal from zte blade.
       retVal = mWindow->set_buffers_geometry(mWindow,
                                              previewWidth, previewHeight,
 #ifdef HWA
@@ -319,6 +417,7 @@ CameraHAL_GenClientData(const android::sp<android::IMemory> &dataPtr,
       LOGV("CameraHAL_GenClientData: ERROR allocating memory from client\n");
    }
    return clientData;
+<<<<<<< HEAD
 }
 
 void
@@ -364,6 +463,55 @@ CameraHAL_DataTSCb(nsecs_t timestamp, int32_t msg_type,
       }
    }
 }
+=======
+}
+
+void
+CameraHAL_DataCb(int32_t msg_type, const android::sp<android::IMemory>& dataPtr,
+                 void *user)
+{
+   LOGV("CameraHAL_DataCb: msg_type:%d user:%p\n", msg_type, user);
+   if (msg_type == CAMERA_MSG_PREVIEW_FRAME) {
+      int32_t previewWidth, previewHeight;
+      android::CameraParameters hwParameters = qCamera->getParameters();
+      hwParameters.getPreviewSize(&previewWidth, &previewHeight);
+      CameraHAL_HandlePreviewData(dataPtr, mWindow, origCamReqMemory,
+                                  previewWidth, previewHeight);
+   }
+
+   if (origData_cb != NULL && origCamReqMemory != NULL) {
+      camera_memory_t *clientData = CameraHAL_GenClientData(dataPtr,
+                                       origCamReqMemory, user);
+      if (clientData != NULL) {
+         LOGV("CameraHAL_DataCb: Posting data to client\n");
+         origData_cb(msg_type, clientData, 0, NULL, user);
+         clientData->release(clientData);
+      }
+   }
+}
+
+void
+CameraHAL_DataTSCb(nsecs_t timestamp, int32_t msg_type,
+                   const android::sp<android::IMemory>& dataPtr, void *user)
+{
+   LOGV("CameraHAL_DataTSCb: timestamp:%lld msg_type:%d user:%p\n",
+        timestamp /1000, msg_type, user);
+
+   if (origDataTS_cb != NULL && origCamReqMemory != NULL) {
+      camera_memory_t *clientData = CameraHAL_GenClientData(dataPtr,
+                                       origCamReqMemory, user);
+      if (clientData != NULL) {
+         LOGV("CameraHAL_DataTSCb: Posting data to client timestamp:%lld\n",
+              systemTime());
+         origDataTS_cb(timestamp, msg_type, clientData, 0, user);
+         qCamera->releaseRecordingFrame(dataPtr);
+         clientData->release(clientData);
+      } else {
+         LOGD("CameraHAL_DataTSCb: ERROR allocating memory from client\n");
+      }
+   }
+}
+>>>>>>> libcamera: Update to camera hal from zte blade.
 
 int
 CameraHAL_GetNum_Cameras(void)
@@ -537,9 +685,17 @@ qcamera_start_preview(struct camera_device * device)
    LOGV("qcamera_start_preview: Preview enabled:%d msg enabled:%d\n",
         qCamera->previewEnabled(),
         qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME));
+<<<<<<< HEAD
    if (!qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME)) {
       qCamera->enableMsgType(CAMERA_MSG_PREVIEW_FRAME);
    }
+=======
+
+   if (!qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME)) {
+      qCamera->enableMsgType(CAMERA_MSG_PREVIEW_FRAME);
+   }
+
+>>>>>>> libcamera: Update to camera hal from zte blade.
    return qCamera->startPreview();
 }
 
@@ -553,6 +709,10 @@ qcamera_stop_preview(struct camera_device * device)
    if (qCamera->msgTypeEnabled(CAMERA_MSG_PREVIEW_FRAME)) {
       qCamera->disableMsgType(CAMERA_MSG_PREVIEW_FRAME);
    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> libcamera: Update to camera hal from zte blade.
    return qCamera->stopPreview();
 }
 
@@ -578,6 +738,10 @@ qcamera_start_recording(struct camera_device * device)
    /* TODO: Remove hack. */
    qCamera->enableMsgType(CAMERA_MSG_VIDEO_FRAME);
    qCamera->startRecording();
+<<<<<<< HEAD
+=======
+
+>>>>>>> libcamera: Update to camera hal from zte blade.
    return NO_ERROR;
 }
 
@@ -637,6 +801,10 @@ qcamera_take_picture(struct camera_device * device)
                          CAMERA_MSG_COMPRESSED_IMAGE);
 
    qCamera->takePicture();
+<<<<<<< HEAD
+=======
+
+>>>>>>> libcamera: Update to camera hal from zte blade.
    return NO_ERROR;
 }
 

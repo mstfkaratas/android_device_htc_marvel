@@ -57,8 +57,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface = wlan0 \
     wifi.supplicant_scan_interval=15 \
     ro.sf.lcd_density = 160 \
-    ro.opengles.version=131072 \
-    ro.htc.camerahack=msm7k
+    ro.opengles.version=131072
 
 # Default network type.
 # 0 => WCDMA preferred.
@@ -108,7 +107,6 @@ PRODUCT_PACKAGES += \
     lights.marvel \
     sensors.marvel \
     gps.marvel \
-    camera.marvel \
     audio.a2dp.default \
     audio.primary.marvel \
     audio_policy.marvel
@@ -119,6 +117,11 @@ PRODUCT_PACKAGES += \
     copybit.msm7x27 \
     hwcomposer.default \
     hwcomposer.msm7x27
+
+# camera
+PRODUCT_PACKAGES += \
+    camera.msm7x27 \
+    libcamera
 
 # audio
 PRODUCT_PACKAGES += \
