@@ -70,7 +70,7 @@ extern "C" {
 #include <sys/time.h>
 #include <stdlib.h>
 
-#include <msm_camera.h>
+#include <media/msm_camera.h>
 
 #define DEFAULT_PICTURE_WIDTH  1024
 #define DEFAULT_PICTURE_HEIGHT 768
@@ -93,6 +93,8 @@ bool  (*LINK_jpeg_encoder_encode)(const cam_ctrl_dimension_t *dimen,
                                   common_crop_t *scaling_parms, exif_tags_info_t *exif_data,
                                   int exif_table_numEntries, int jpegPadding);
 void (*LINK_camframe_terminate)(void);
+
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 //for 720p
 // Function to add a video buffer to free Q
 void (*LINK_camframe_free_video)(struct msm_frame *frame);
@@ -100,18 +102,17 @@ void (*LINK_camframe_free_video)(struct msm_frame *frame);
 void (**LINK_camframe_video_callback)(struct msm_frame * frame);
 // To flush free Q in cam frame.
 void (*LINK_cam_frame_flush_free_video)(void);
+#endif
 
 int8_t (*LINK_jpeg_encoder_setMainImageQuality)(uint32_t quality);
 int8_t (*LINK_jpeg_encoder_setThumbnailQuality)(uint32_t quality);
 int8_t (*LINK_jpeg_encoder_setRotation)(uint32_t rotation);
-// C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
-//int8_t (*LINK_jpeg_encoder_setLocation)(const camera_position_type *location);
-//const struct camera_size_type *(*LINK_default_sensor_get_snapshot_sizes)(int *len);
+int8_t (*LINK_jpeg_encoder_setLocation)(const camera_position_type *location);
+const struct camera_size_type *(*LINK_default_sensor_get_snapshot_sizes)(int *len);
 int (*LINK_launch_cam_conf_thread)(void);
 int (*LINK_release_cam_conf_thread)(void);
-// C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
-//int8_t (*LINK_zoom_crop_upscale)(uint32_t width, uint32_t height,
-//    uint32_t cropped_width, uint32_t cropped_height, uint8_t *img_buf);
+int8_t (*LINK_zoom_crop_upscale)(uint32_t width, uint32_t height,
+    uint32_t cropped_width, uint32_t cropped_height, uint8_t *img_buf);
 
 // callbacks
 void  (**LINK_mmcamera_camframe_callback)(struct msm_frame *frame);
@@ -119,7 +120,9 @@ void  (**LINK_mmcamera_jpegfragment_callback)(uint8_t *buff_ptr,
                                               uint32_t buff_size);
 void  (**LINK_mmcamera_jpeg_callback)(jpeg_event_t status);
 void  (**LINK_mmcamera_shutter_callback)(common_crop_t *crop);
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 void  (**LINK_camframe_timeout_callback)(void);
+#endif
 #else
 #define LINK_cam_conf cam_conf
 #define LINK_cam_frame cam_frame
@@ -130,13 +133,11 @@ void  (**LINK_camframe_timeout_callback)(void);
 #define LINK_jpeg_encoder_setMainImageQuality jpeg_encoder_setMainImageQuality
 #define LINK_jpeg_encoder_setThumbnailQuality jpeg_encoder_setThumbnailQuality
 #define LINK_jpeg_encoder_setRotation jpeg_encoder_setRotation
-// C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
-//#define LINK_jpeg_encoder_setLocation jpeg_encoder_setLocation
-//#define LINK_default_sensor_get_snapshot_sizes default_sensor_get_snapshot_sizes
+#define LINK_jpeg_encoder_setLocation jpeg_encoder_setLocation
+#define LINK_default_sensor_get_snapshot_sizes default_sensor_get_snapshot_sizes
 #define LINK_launch_cam_conf_thread launch_cam_conf_thread
 #define LINK_release_cam_conf_thread release_cam_conf_thread
-// C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
-//#define LINK_zoom_crop_upscale zoom_crop_upscale
+#define LINK_zoom_crop_upscale zoom_crop_upscale
 extern void (*mmcamera_camframe_callback)(struct msm_frame *frame);
 extern void (*mmcamera_jpegfragment_callback)(uint8_t *buff_ptr,
                                       uint32_t buff_size);
@@ -167,7 +168,7 @@ union zoomimage
 } zoomImage;
 
 //Default to VGA
-#define DEFAULT_PREVIEW_WIDTH 640
+#define DEFAULT_PREVIEW_WIDTH 800
 #define DEFAULT_PREVIEW_HEIGHT 480
 
 /*
@@ -202,8 +203,8 @@ board_property boardProperties[] = {
         {TARGET_QSD8250, 0x00000fff}
 };
 
-//static const camera_size_type* picture_sizes;
-//static int PICTURE_SIZE_COUNT;
+static const camera_size_type *picture_sizes;
+static int PICTURE_SIZE_COUNT;
 /*       TODO
  * Ideally this should be a populated by lower layers.
  * But currently this is no API to do that at lower layer.
@@ -211,6 +212,7 @@ board_property boardProperties[] = {
  * to be changed once the API is supported.
  */
 //sorted on column basis
+#if 0
 static const camera_size_type picture_sizes[] = {
 //    { 2592, 1944 }, // 5MP
     { 2560, 1920 }, // 5MP (slightly reduced)
@@ -228,6 +230,8 @@ static const camera_size_type picture_sizes[] = {
     { 176, 144 } // QCIF
 };
 static int PICTURE_SIZE_COUNT = sizeof(picture_sizes)/sizeof(camera_size_type);
+#endif
+
 static const camera_size_type * picture_sizes_ptr;
 static int supportedPictureSizesCount;
 
@@ -312,6 +316,7 @@ static const str_map whitebalance[] = {
     { CameraParameters::WHITE_BALANCE_CLOUDY_DAYLIGHT, CAMERA_WB_CLOUDY_DAYLIGHT }
 };
 
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 // from camera_effect_t. This list must match aeecamera.h
 static const str_map effects[] = {
     { CameraParameters::EFFECT_NONE,       CAMERA_EFFECT_OFF },
@@ -324,6 +329,7 @@ static const str_map effects[] = {
     { CameraParameters::EFFECT_BLACKBOARD, CAMERA_EFFECT_BLACKBOARD },
     { CameraParameters::EFFECT_AQUA,       CAMERA_EFFECT_AQUA }
 };
+#endif
 
 // from qcamera/common/camera.h
 static const str_map autoexposure[] = {
@@ -638,7 +644,9 @@ static bool parameter_string_initialized = false;
 static String8 preview_size_values;
 static String8 picture_size_values;
 static String8 antibanding_values;
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 static String8 effect_values;
+#endif
 static String8 autoexposure_values;
 static String8 whitebalance_values;
 static String8 flash_values;
@@ -824,7 +832,9 @@ static const nsecs_t SINGLETON_RELEASING_RECHECK_TIMEOUT = seconds_to_nanosecond
 static Condition singleton_wait;
 
 static void receive_camframe_callback(struct msm_frame *frame);
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 static void receive_camframe_video_callback(struct msm_frame *frame); // 720p
+#endif
 static void receive_jpeg_fragment_callback(uint8_t *buff_ptr, uint32_t buff_size);
 static void receive_jpeg_callback(jpeg_event_t status);
 static void receive_shutter_callback(common_crop_t *crop);
@@ -982,8 +992,10 @@ void QualcommCameraHardware::initDefaultParameters()
         findSensorType();
         antibanding_values = create_values_str(
             antibanding, sizeof(antibanding) / sizeof(str_map));
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
         effect_values = create_values_str(
             effects, sizeof(effects) / sizeof(str_map));
+#endif
         autoexposure_values = create_values_str(
             autoexposure, sizeof(autoexposure) / sizeof(str_map));
         whitebalance_values = create_values_str(
@@ -1069,7 +1081,9 @@ void QualcommCameraHardware::initDefaultParameters()
                     picture_size_values.string());
     mParameters.set(CameraParameters::KEY_SUPPORTED_ANTIBANDING,
                     antibanding_values);
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
     mParameters.set(CameraParameters::KEY_SUPPORTED_EFFECTS, effect_values);
+#endif
     mParameters.set(CameraParameters::KEY_SUPPORTED_AUTO_EXPOSURE, autoexposure_values);
     mParameters.set(CameraParameters::KEY_SUPPORTED_WHITE_BALANCE,
                     whitebalance_values);
@@ -1165,7 +1179,11 @@ void QualcommCameraHardware::initDefaultParameters()
 void QualcommCameraHardware::findSensorType(){
     mDimension.picture_width = DEFAULT_PICTURE_WIDTH;
     mDimension.picture_height = DEFAULT_PICTURE_HEIGHT;
-    bool ret = native_set_parm(CAMERA_SET_PARM_DIMENSION,
+    bool ret;
+
+    LOGV("findSensorType E");
+
+    ret = native_set_parm(CAMERA_SET_PARM_DIMENSION,
                     sizeof(cam_ctrl_dimension_t), &mDimension);
     if (ret) {
         unsigned int i;
@@ -1173,6 +1191,7 @@ void QualcommCameraHardware::findSensorType(){
             if (sensorTypes[i].rawPictureHeight
                     == mDimension.raw_picture_height) {
                 sensorType = sensorTypes + i;
+                LOGV("findSensorType X");
                 return;
             }
         }
@@ -1229,6 +1248,7 @@ bool QualcommCameraHardware::startCamera()
 
     *LINK_mmcamera_jpeg_callback = receive_jpeg_callback;
 
+#if 0
     *(void **)&LINK_camframe_timeout_callback =
         ::dlsym(libmmcamera, "camframe_timeout_callback");
 
@@ -1240,6 +1260,7 @@ bool QualcommCameraHardware::startCamera()
 
     *(void **)&LINK_camframe_video_callback = ::dlsym(libmmcamera, "mmcamera_camframe_videocallback");
         *LINK_camframe_video_callback = receive_camframe_video_callback;
+#endif
 
     *(void **)&LINK_mmcamera_shutter_callback =
         ::dlsym(libmmcamera, "mmcamera_shutter_callback");
@@ -1255,18 +1276,14 @@ bool QualcommCameraHardware::startCamera()
     *(void**)&LINK_jpeg_encoder_setRotation =
         ::dlsym(libmmcamera, "jpeg_encoder_setRotation");
 
-/* C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
     *(void**)&LINK_jpeg_encoder_setLocation =
         ::dlsym(libmmcamera, "jpeg_encoder_setLocation");
-*/
 
     *(void **)&LINK_cam_conf =
         ::dlsym(libmmcamera, "cam_conf");
 
-/* C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
     *(void **)&LINK_default_sensor_get_snapshot_sizes =
         ::dlsym(libmmcamera, "default_sensor_get_snapshot_sizes");
-*/
 
     *(void **)&LINK_launch_cam_conf_thread =
         ::dlsym(libmmcamera, "launch_cam_conf_thread");
@@ -1274,10 +1291,8 @@ bool QualcommCameraHardware::startCamera()
     *(void **)&LINK_release_cam_conf_thread =
         ::dlsym(libmmcamera, "release_cam_conf_thread");
 
-/* C3C0 20120503 - doesn't exist in Skate's liboemcamera.so
     *(void **)&LINK_zoom_crop_upscale =
         ::dlsym(libmmcamera, "zoom_crop_upscale");
-*/
 #else
     mmcamera_camframe_callback = receive_camframe_callback;
     mmcamera_jpegfragment_callback = receive_jpeg_fragment_callback;
@@ -1323,13 +1338,11 @@ bool QualcommCameraHardware::startCamera()
         LOGI("%s: camsensor name %s, flash %d", __FUNCTION__,
              mSensorInfo.name, mSensorInfo.flash_enabled);
 
-/* C3C0 20120503 - method doesn't exist in Skate's liboemcamera.so
     picture_sizes = LINK_default_sensor_get_snapshot_sizes(&PICTURE_SIZE_COUNT);
     if (!picture_sizes || !PICTURE_SIZE_COUNT) {
         LOGV("startCamera X: could not get snapshot sizes");
         return false;
     }
-*/
     LOGV("startCamera X");
     return true;
 }
@@ -1958,11 +1971,9 @@ void QualcommCameraHardware::jpeg_set_location()
         LOGD("setting image location ALT %d LAT %lf LON %lf",
              pt.altitude, pt.latitude, pt.longitude);
 
-/* C3C0 20120503 - method doesn't exist in Skate's liboemcamera.so
         if (!LINK_jpeg_encoder_setLocation(&pt)) {
             LOGV("jpeg_set_location: LINK_jpeg_encoder_setLocation failed.");
         }
-*/
     }
     else LOGV("not setting image location");
 }
@@ -2092,9 +2103,11 @@ void QualcommCameraHardware::runVideoThread(void *data)
                 rcb(systemTime(), CAMERA_MSG_VIDEO_FRAME, mRecordHeap->mBuffers[offset], rdata);
             }
 #else
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
             // 720p output2  : simulate release frame here:
             LOGV("in video_thread simulation , releasing the video frame");
             LINK_camframe_free_video(vframe);
+#endif
 #endif
 
         } else LOGV("in video_thread get frame returned null");
@@ -2557,11 +2570,14 @@ status_t QualcommCameraHardware::startPreviewInternal()
 
     {
         Mutex::Autolock cameraRunningLock(&mCameraRunningLock);
-        if(( mCurrentTarget != TARGET_MSM7630 ) &&
-                (mCurrentTarget != TARGET_QSD8250))
+#if 0
+        if((mCurrentTarget != TARGET_MSM7630) &&
+           (mCurrentTarget != TARGET_QSD8250))
             mCameraRunning = native_start_preview(mCameraControlFd);
         else
             mCameraRunning = native_start_video(mCameraControlFd);
+#endif
+        mCameraRunning = native_start_preview(mCameraControlFd);
     }
 
     if(!mCameraRunning) {
@@ -2572,7 +2588,7 @@ status_t QualcommCameraHardware::startPreviewInternal()
         return UNKNOWN_ERROR;
     }
 
-    LOGV("C3C0: native_start_preview success");
+    LOGV("native_start_preview success");
 
     //Reset the Gps Information
     exif_table_numEntries = 0;
@@ -2641,7 +2657,9 @@ void QualcommCameraHardware::stopPreviewInternal()
                 /* Flush the Busy Q */
                 cam_frame_flush_video();
                 /* Flush the Free Q */
+#if 0 /* GURU */
                 LINK_cam_frame_flush_free_video();
+#endif
 	    }
 	    mPreviewInitialized = false;
 	}
@@ -3021,9 +3039,11 @@ status_t QualcommCameraHardware::setParameters(const CameraParameters& params)
     if ((rc = setPictureSize(params)))  final_rc = rc;
     if ((rc = setJpegQuality(params)))  final_rc = rc;
     if ((rc = setAntibanding(params)))  final_rc = rc;
-    //if ((rc = setAutoExposure(params))) final_rc = rc;
+    if ((rc = setAutoExposure(params))) final_rc = rc;
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
     if ((rc = setWhiteBalance(params))) final_rc = rc;
     if ((rc = setEffect(params)))       final_rc = rc;
+#endif
     if ((rc = setFlash(params)))        final_rc = rc;
     if ((rc = setGpsLocation(params)))  final_rc = rc;
     if ((rc = setRotation(params)))     final_rc = rc;
@@ -3037,7 +3057,9 @@ status_t QualcommCameraHardware::setParameters(const CameraParameters& params)
     if ((rc = setPictureFormat(params))) final_rc = rc;
     //if ((rc = setSharpness(params)))    final_rc = rc;
     if ((rc = setContrast(params)))     final_rc = rc;
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
     if ((rc = setSaturation(params)))   final_rc = rc;
+#endif
 
     LOGV("setParameters: X");
     //return final_rc;
@@ -3374,9 +3396,11 @@ bool QualcommCameraHardware::initRecord()
     mVideoThreadWaitLock.unlock();
 
     // flush free queue and add 5,6,7,8 buffers.
+#if 0 /* GURU */
     LINK_cam_frame_flush_free_video();
     for(int i=ACTIVE_VIDEO_BUFFERS+1;i <kRecordBufferCount; i++)
         LINK_camframe_free_video(&recordframes[i]);
+#endif
     LOGV("initREcord X");
 
     return true;
@@ -3399,7 +3423,9 @@ status_t QualcommCameraHardware::startRecording()
             LOGV("frames in busy Q = %d", g_busy_frame_queue.num_of_frames);
             while((g_busy_frame_queue.num_of_frames) >0){
                 msm_frame* vframe = cam_frame_get_video ();
+#if 0 /* GURU */
                 LINK_camframe_free_video(vframe);
+#endif
             }
             LOGV("frames in busy Q = %d after deQueing", g_busy_frame_queue.num_of_frames);
 
@@ -3482,7 +3508,9 @@ void QualcommCameraHardware::releaseRecordingFrame(
             // do this only if frame thread is running
             mFrameThreadWaitLock.lock();
             if(mFrameThreadRunning )
+#if 0 /* GURU */
                 LINK_camframe_free_video(releaseframe);
+#endif
 
             mFrameThreadWaitLock.unlock();
         } else {
@@ -3850,6 +3878,7 @@ status_t QualcommCameraHardware::setJpegQuality(const CameraParameters& params) 
     return rc;
 }
 
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 status_t QualcommCameraHardware::setEffect(const CameraParameters& params)
 {
 
@@ -3886,6 +3915,7 @@ status_t QualcommCameraHardware::setEffect(const CameraParameters& params)
     LOGV("Invalid effect value: %s", (str == NULL) ? "NULL" : str);
     return BAD_VALUE;
 }
+#endif
 
 status_t QualcommCameraHardware::setAutoExposure(const CameraParameters& params)
 {
@@ -3946,6 +3976,7 @@ status_t QualcommCameraHardware::setContrast(const CameraParameters& params)
     return ret ? NO_ERROR : UNKNOWN_ERROR;
 }
 
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 status_t QualcommCameraHardware::setSaturation(const CameraParameters& params)
 {
     if(!strcmp(sensorType->name, "2mp")) {
@@ -3976,6 +4007,7 @@ status_t QualcommCameraHardware::setSaturation(const CameraParameters& params)
 	return NO_ERROR;
     }
 }
+#endif
 
 status_t QualcommCameraHardware::setBrightness(const CameraParameters& params) {
         int brightness = params.getInt("luma-adaptation");
@@ -4008,6 +4040,7 @@ status_t QualcommCameraHardware::setExposureCompensation(const CameraParameters&
         return ret ? NO_ERROR : UNKNOWN_ERROR;
 }
 
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 status_t QualcommCameraHardware::setWhiteBalance(const CameraParameters& params)
 {
 
@@ -4036,6 +4069,7 @@ status_t QualcommCameraHardware::setWhiteBalance(const CameraParameters& params)
             return NO_ERROR;
     }
 }
+#endif
 
 status_t QualcommCameraHardware::setFlash(const CameraParameters& params)
 {
@@ -4512,10 +4546,10 @@ static bool register_buf(int camfd,
     else
         pmemBuf.cbcr_off = PAD_TO_WORD(frame_size * 2 / 3);
 
-    pmemBuf.active   = vfe_can_write;
+    pmemBuf.vfe_can_write   = vfe_can_write;
 
     LOGV("register_buf: camfd = %d, reg = %d buffer = %p can_write = %d",
-         camfd, !register_buffer, buf, pmemBuf.active);
+         camfd, !register_buffer, buf, pmemBuf.vfe_can_write);
     if (ioctl(camfd,
               register_buffer ?
               MSM_CAM_IOCTL_REGISTER_PMEM :
@@ -4583,6 +4617,8 @@ static void receive_jpeg_callback(jpeg_event_t status)
     }
     LOGV("receive_jpeg_callback X");
 }
+
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 // 720p : video frame calbback from camframe
 static void receive_camframe_video_callback(struct msm_frame *frame)
 {
@@ -4593,6 +4629,7 @@ static void receive_camframe_video_callback(struct msm_frame *frame)
 		 }
     LOGV("receive_camframe_video_callback X");
 }
+#endif
 
 void QualcommCameraHardware::setCallbacks(notify_callback notify_cb,
                              data_callback data_cb,
@@ -4650,6 +4687,7 @@ status_t QualcommCameraHardware::setOverlay(const sp<Overlay> &Overlay)
     return NO_ERROR;
 }
 
+#if 0 /* GURU: Doesn't exist in HTC liboemcamera */
 void QualcommCameraHardware::receive_camframetimeout(void) {
     LOGV("receive_camframetimeout: E");
     Mutex::Autolock l(&mCamframeTimeoutLock);
@@ -4666,6 +4704,7 @@ static void receive_camframetimeout_callback(void) {
         obj->receive_camframetimeout();
     }
 }
+#endif
 
 void QualcommCameraHardware::storePreviewFrameForPostview(void) {
     LOGV(" storePreviewFrameForPostview : E ");

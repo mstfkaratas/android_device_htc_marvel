@@ -35,7 +35,7 @@
 
 extern "C" {
 #include <linux/android_pmem.h>
-#include <msm_camera.h>
+#include <media/msm_camera.h>
 }
 
 struct str_map {
