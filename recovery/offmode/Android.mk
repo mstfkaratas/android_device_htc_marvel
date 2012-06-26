@@ -1,4 +1,4 @@
-ifeq ($(findstring $(TARGET_BOOTLOADER_BOARD_NAME),marvel),)
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),marvel)
 
 LOCAL_PATH := $(call my-dir)
 

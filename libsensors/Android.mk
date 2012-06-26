@@ -15,7 +15,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(findstring $(TARGET_BOOTLOADER_BOARD_NAME),marvel),)
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),marvel)
 
 # HAL module implemenation, not prelinked, and stored in
 # hw/<SENSORS_HARDWARE_MODULE_ID>.<ro.product.board>.so
@@ -42,4 +42,4 @@ LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_SHARED_LIBRARY)
 
-endif # marvel
+endif # !TARGET_SIMULATOR
