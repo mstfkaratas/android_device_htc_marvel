@@ -19,16 +19,7 @@
 $(call inherit-product, build/target/product/full_base.mk)
 $(call inherit-product, build/target/product/languages_full.mk)
 
-# stuff common to all HTC phones
-$(call inherit-product, device/htc/common/common.mk)
-
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
-
-# dalvik heap config for devices with 512MB memory
-$(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
-
-# media profiles and capabilities spec
-$(call inherit-product, device/htc/marvel/media_a1026.mk)
 
 DEVICE_PACKAGE_OVERLAYS := device/htc/marvel/overlay
 
@@ -85,78 +76,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     net.bt.name=Android \
     ro.config.sync=yes
 
-PRODUCT_COPY_FILES += \
-    frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-    frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
-    frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
-    frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/base/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
-    frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
-    frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
-
-# media config xml file
-PRODUCT_COPY_FILES += \
-    device/htc/marvel/media_profiles.xml:system/etc/media_profiles.xml
-
-# device specific
+# Add device specific modules
 PRODUCT_PACKAGES += \
-    lights.marvel \
-    sensors.marvel \
-    gps.marvel \
     camera.marvel \
     audio.a2dp.default \
     audio.primary.marvel \
     audio_policy.marvel
 
-# gpu
+### Add additional packages
 PRODUCT_PACKAGES += \
-    gralloc.msm7x27 \
-    copybit.msm7x27 \
-    hwcomposer.default \
-    hwcomposer.msm7x27
-
-# audio
-PRODUCT_PACKAGES += \
-    libtinyalsa \
-    libaudioutils
-
-# OMX
-PRODUCT_PACKAGES += \
-    libstagefrighthw \
-    libOmxCore
-
-# live wallpapers
-PRODUCT_PACKAGES += \
-    LiveWallpapers \
-    LiveWallpapersPicker \
-    VisualizationWallpapers \
-    NoiseField \
-    PhaseBeam \
-    MagicSmoke \
-    Galaxy4 \
-    HoloSpiralWallpaper \
-    librs_jni
-
-# missing packages
-PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory \
-    Superuser \
     Torch
-
-PRODUCT_COPY_FILES += \
-    device/htc/marvel/vold.fstab:system/etc/vold.fstab \
-    device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
-    device/htc/marvel/idc/atmel-touchscreen.idc:system/usr/idc/cy8c-touchscreen.idc
-
-# Prebuilt modules or firmware
-PRODUCT_COPY_FILES += \
-    device/htc/marvel/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
-    device/htc/marvel/firmware/fw_bcm4329.bin:system/etc/firmware/fw_bcm4329.bin \
-    device/htc/marvel/firmware/fw_bcm4329_apsta.bin:system/etc/firmware/fw_bcm4329_apsta.bin
-
-PRODUCT_NAME := generic_marvel
-PRODUCT_DEVICE := marvel
