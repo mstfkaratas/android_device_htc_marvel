@@ -40,9 +40,8 @@ PRODUCT_COPY_FILES += \
     device/htc/marvel/key/cy8c-touchscreen.kl:system/usr/keylayout/cy8c-touchscreen.kl
 
 PRODUCT_COPY_FILES += \
-    device/htc/marvel/ueventd.marvel.rc:root/ueventd.marvel.rc \
-    device/htc/marvel/init.marvel.usb.rc:root/init.marvel.usb.rc \
-    device/htc/marvel/init.marvel.rc:root/init.marvel.rc
+    device/htc/marvel/init.marvel.rc:root/init.marvel.rc \
+    device/htc/marvel/ueventd.marvel.rc:root/ueventd.marvel.rc
 
 PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/system/lib/libhtc_ril.so \
