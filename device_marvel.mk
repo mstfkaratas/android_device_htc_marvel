@@ -26,6 +26,10 @@ $(call inherit-product, device/htc/marvel-common/marvel.mk)
 
 DEVICE_PACKAGE_OVERLAYS := device/htc/marvel/overlay
 
+# Permissions
+PRODUCT_COPY_FILES += \
+    frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+
 # Keylayouts
 PRODUCT_COPY_FILES += \
     device/htc/marvel/key/marvel-keypad.kl:system/usr/keylayout/marvel-keypad.kl \
