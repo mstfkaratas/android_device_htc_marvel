@@ -81,8 +81,6 @@ on init
     setprop ro.EMPTY_APP_MEM 8192
 
     chown system system /sys/module/serial/parameters/modem_enabled
-    chown system system /dev/ttyHSUSB0
-    chown system system /dev/smd9
     chown radio radio /sys/module/msm_flashlight/parameters/phone_status
     # chown system system /sys/class/leds/wimax/brightness
 
