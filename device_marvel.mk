@@ -85,6 +85,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Add device specific modules
 PRODUCT_PACKAGES += \
+    lights.marvel \
     camera.marvel \
     audio.a2dp.default \
     audio.primary.marvel \
