@@ -29,6 +29,9 @@ TARGET_BOOTLOADER_BOARD_NAME := marvel
 ### Qcom GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := marvel
 
+### Compass
+BOARD_VENDOR_COMPASS_HARDWARE := akm8975
+
 ### Kernel related stuff
 BOARD_KERNEL_CMDLINE := no_console_suspend=1 console=null
 BOARD_KERNEL_BASE := 0x12c00000
