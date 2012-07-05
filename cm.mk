@@ -6,7 +6,6 @@ TARGET_BOOTANIMATION_NAME := vertical-320x480
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 $(call inherit-product, vendor/cm/config/gsm.mk)
-$(call inherit-product, vendor/cm/config/cdma.mk)
 
 # Inherit device configuration
 $(call inherit-product, device/htc/marvel/device_marvel.mk)
