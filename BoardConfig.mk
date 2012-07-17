@@ -58,7 +58,6 @@ BOARD_FLASH_BLOCK_SIZE := 262144
 ### Recovery
 
 #BOARD_USES_RECOVERY_CHARGEMODE := true
-TARGET_RECOVERY_INITRC := device/htc/marvel/init.recovery.rc
 BOARD_CUSTOM_GRAPHICS := ../../../device/htc/marvel/recovery/graphics.c
 BOARD_USES_MMCUTILS := false
 BOARD_HAS_NO_SELECT_BUTTON := true

@@ -51,6 +51,7 @@ Copyright (C) 2011 Andreas Schneider <asn@cryptomilk.org>
 
       <project name="projects/marvel/kernel_htc_msm7227.git" path="kernel/htc/msm7227" remote="cryptomilk" />
       <project name="CyanogenMod/android_device_htc_common" path="device/htc/common" revision="refs/heads/gingerbread" />
+      <project name="projects/marvel/android_device_htc_msm7x27-recovery.git" path="device/htc/msm7x27-recovery" remote="cryptomilk" />
       <project name="projects/marvel/android_device_htc_msm7x27-common.git" path="device/htc/msm7x27-common" remote="cryptomilk" />
       <project name="projects/marvel/android_device_htc_marvel-common.git" path="device/htc/marvel-common" remote="cryptomilk" />
       <project name="projects/marvel/android_device_htc_marvel.git" path="device/htc/marvel" remote="cryptomilk" />
