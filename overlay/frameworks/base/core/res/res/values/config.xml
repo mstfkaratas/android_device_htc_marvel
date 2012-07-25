@@ -190,8 +190,4 @@
          animation
     -->
     <integer name="config_screenOnAnimation">0</integer>
-
-    <!-- Boolean indicating if current platform supports quick switch-on/off of
-         Bluetooth Module -->
-    <bool name="config_bluetooth_adapter_quick_switch">false</bool>
 </resources>
