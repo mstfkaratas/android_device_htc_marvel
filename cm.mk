@@ -1,8 +1,5 @@
 PRODUCT_RELEASE_NAME := CRYPTOMILK
 
-# Inherit some common Android stuff.
-$(call inherit-product, build/target/product/languages_full.mk)
-
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/gsm.mk)
 $(call inherit-product, vendor/cm/config/common_mini_phone.mk)

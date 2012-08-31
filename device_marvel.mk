@@ -16,6 +16,9 @@
 
 ## (1) First, the most specific values, i.e. the aspects that are specific to GSM
 
+$(call inherit-product, build/target/product/full_base.mk)
+$(call inherit-product, build/target/product/languages_full.mk)
+
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
 $(call inherit-product, device/htc/msm7x27-common/msm7x27.mk)
