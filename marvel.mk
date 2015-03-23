@@ -77,6 +77,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     net.bt.name=Android \
     ro.config.sync=yes
 
+## mstf private repo
+$(call inherit-product-if-exists, vendor/mstf/extras/mstf-extras.mk)
+
 PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
